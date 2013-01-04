@@ -35,12 +35,17 @@
 
 -(IBAction) enqueueNotification2:(id)sender
 {
-    [MPNotificationView notifyWithText:@"Lorem Ipsum" andDetail:@"dolor sit amet"];
+
+    [MPNotificationView notifyWithText:@"Moped Dog:"
+                                detail:@"I have no idea what I'm doing..."
+                                 image:[UIImage imageNamed:@"mopedDog.jpeg"]
+                           andDuration:5.0];
 }
 
 -(IBAction) enqueueNotification3:(id)sender
 {
     [MPNotificationView notifyWithText:@"Grumpy wizards" andDetail:@"make a toxic brew for the jovial queen"];
+
 }
 
 @end
