@@ -42,7 +42,7 @@ Or if you need to load the image async using `AFNetworking`:
                            andDuration:5.0];
                            
     //From UIImage+AFNetworking.h:                           
-    [notification.imageView [NSURL setImageWithURL:[NSURL URLWithString:@"https://dl.dropbox.com/u/361895/mopeddog.png"]];
+    [notification.imageView setImageWithURL:[NSURL URLWithString:@"https://dl.dropbox.com/u/361895/mopeddog.png"]];
                            
 ````
 
