@@ -32,11 +32,30 @@ Or use the following call to add a thumbnail image and customize duration:
                            andDuration:5.0];
 ````
 
+Or if you need to load the image async using `AFNetworking`:
+
+````
+    MPNotificationView* notification = 
+    [MPNotificationView notifyWithText:@"Moped Dog:"
+                                detail:@"I have no idea what I'm doing..."
+                                 image:nil
+                           andDuration:5.0];
+                           
+    //From UIImage+AFNetworking.h:                           
+    [notification.imageView [NSURL setImageWithURL:[NSURL URLWithString:@"https://dl.dropbox.com/u/361895/mopeddog.png"]];
+                           
+````
+
 ###Contact:
 
 Developed by [Engin Kurutepe](https://www.twitter.com/engintepe) at [Moped](http://www.moped.com) in [Berlin](http://goo.gl/maps/Ivk0B)
 
 Follow us on twitter: [@moped](https://www.twitter.com/moped)
+
+
+###Thanks:
+
+Stole some ideas from [BWStatusOverlay](https://github.com/brunow/BWStatusBarOverlay) by Bruno Wernimont. Thanks.
 
 ###License:
 
