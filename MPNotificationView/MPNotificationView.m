@@ -211,17 +211,17 @@ static MPNotificationWindow * __notificationWindow = nil;
 
 
 
-+ (void) notifyWithText:(NSString*)text andDetail:(NSString*)detail
++ (MPNotificationView*) notifyWithText:(NSString*)text andDetail:(NSString*)detail
 {
-    [self notifyWithText:text andDetail:detail andDuration:2.0];
+    return [self notifyWithText:text andDetail:detail andDuration:2.0];
 }
 
-+ (void) notifyWithText:(NSString*)text andDetail:(NSString*)detail andDuration:(NSTimeInterval)duration
++ (MPNotificationView*) notifyWithText:(NSString*)text andDetail:(NSString*)detail andDuration:(NSTimeInterval)duration
 {
-    [self notifyWithText:text detail:detail image:nil andDuration:duration];
+    return [self notifyWithText:text detail:detail image:nil andDuration:duration];
 }
 
-+ (void) notifyWithText:(NSString*)text
++ (MPNotificationView*) notifyWithText:(NSString*)text
                  detail:(NSString*)detail
                   image:(UIImage*)image
             andDuration:(NSTimeInterval)duration
@@ -253,6 +253,8 @@ static MPNotificationWindow * __notificationWindow = nil;
     if (__notificationWindow.currentNotification == nil) {
         [self showNextNotification];
     }
+    
+    return notification;
 }
 
 + (void) showNextNotification {
@@ -359,21 +361,21 @@ static MPNotificationWindow * __notificationWindow = nil;
 
 + (UIImage*) screenImageWithRect:(CGRect)rect
 {
-    NSLog(@"capture: %@", NSStringFromCGRect(rect));
+
     CALayer * layer = [[UIApplication sharedApplication] keyWindow].layer;
     
     UIGraphicsBeginImageContext(layer.frame.size);
 
     [layer renderInContext:UIGraphicsGetCurrentContext()];
     UIImage *screenshot = UIGraphicsGetImageFromCurrentImageContext();
-    NSLog(@"screenshot size %@", NSStringFromCGSize(screenshot.size));
+
     UIGraphicsEndImageContext();
     
     CGImageRef imageRef = CGImageCreateWithImageInRect([screenshot CGImage], rect);
     UIImage *croppedScreenshot = [UIImage imageWithCGImage:imageRef];
     CGImageRelease(imageRef);
 
-    NSLog(@"crop size %@", NSStringFromCGSize(croppedScreenshot.size));
+
 
 
     UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
@@ -391,7 +393,7 @@ static MPNotificationWindow * __notificationWindow = nil;
     UIImage * rotatedImage = [[UIImage alloc] initWithCGImage:croppedScreenshot.CGImage
                                                         scale:croppedScreenshot.scale
                                                   orientation:imageOrientation];
-    NSLog(@"orientation %d", rotatedImage.imageOrientation);
+
     
     return rotatedImage;
 }

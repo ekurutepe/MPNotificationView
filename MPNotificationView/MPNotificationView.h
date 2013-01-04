@@ -16,11 +16,11 @@
 
 @property (nonatomic) NSTimeInterval duration;
 
-+ (void) notifyWithText:(NSString*)text
-                 detail:(NSString*)detail
-                  image:(UIImage*)image
++ (MPNotificationView*) notifyWithText:(NSString*)text
+                                detail:(NSString*)detail
+                                 image:(UIImage*)image
             andDuration:(NSTimeInterval)duration;
-+ (void) notifyWithText:(NSString*)text andDetail:(NSString*)detail andDuration:(NSTimeInterval)duration;
-+ (void) notifyWithText:(NSString*)text andDetail:(NSString*)detail;
++ (MPNotificationView*) notifyWithText:(NSString*)text andDetail:(NSString*)detail andDuration:(NSTimeInterval)duration;
++ (MPNotificationView*) notifyWithText:(NSString*)text andDetail:(NSString*)detail;
 
 @end
