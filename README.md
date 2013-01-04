@@ -11,7 +11,7 @@ An in-app notification view that mimics the iOS 6 notification views which appea
 - Enqueues multiple notifications and shows them with a default duration of 2 seconds.
 
 ###Screenshot:
-![Example notification](https://dl.dropbox.com/u/361895/grumpy.png "Example Notification")
+![Example notification](https://dl.dropbox.com/u/361895/mopeddog.png "Example Notification")
 
 
 
