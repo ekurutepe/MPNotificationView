@@ -21,6 +21,7 @@
 		870D5D231696DA9E00AB84FB /* MPNotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 870D5D221696DA9E00AB84FB /* MPNotificationView.m */; };
 		870D5D281696DC9400AB84FB /* OBGradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 870D5D271696DC9400AB84FB /* OBGradientView.m */; };
 		870D5D2A1696DD3400AB84FB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870D5D291696DD3400AB84FB /* QuartzCore.framework */; };
+		870D5D3816971F1500AB84FB /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 870D5D3716971F1500AB84FB /* LICENSE */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +46,7 @@
 		870D5D261696DC9400AB84FB /* OBGradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OBGradientView.h; sourceTree = "<group>"; };
 		870D5D271696DC9400AB84FB /* OBGradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OBGradientView.m; sourceTree = "<group>"; };
 		870D5D291696DD3400AB84FB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		870D5D3716971F1500AB84FB /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +67,7 @@
 		870D5CEA1696DA5A00AB84FB = {
 			isa = PBXGroup;
 			children = (
+				870D5D3716971F1500AB84FB /* LICENSE */,
 				870D5D291696DD3400AB84FB /* QuartzCore.framework */,
 				870D5D251696DC9400AB84FB /* OBGradientView */,
 				870D5D201696DA9E00AB84FB /* MPNotificationView */,
@@ -194,6 +197,7 @@
 				870D5D0E1696DA5A00AB84FB /* Default@2x.png in Resources */,
 				870D5D101696DA5A00AB84FB /* Default-568h@2x.png in Resources */,
 				870D5D131696DA5A00AB84FB /* MainStoryboard.storyboard in Resources */,
+				870D5D3816971F1500AB84FB /* LICENSE in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
