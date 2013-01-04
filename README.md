@@ -32,6 +32,12 @@ Or use the following call to add a thumbnail image and customize duration:
                            andDuration:5.0];
 ````
 
+###Contact:
+
+Developed by [Engin Kurutepe](https://www.twitter.com/engintepe) at [Moped](http://www.moped.com) in [Berlin](http://goo.gl/maps/Ivk0B)
+
+Follow us on twitter: [@moped](https://www.twitter.com/moped)
+
 ###License:
 
 Copyright (c) 2013 Engin Kurutepe - Moped Inc.
