@@ -324,13 +324,16 @@ static MPNotificationWindow * __notificationWindow = nil;
         MPNotificationView * notification = (MPNotificationView*)viewToRotateIn;
         __notificationWindow.currentNotification = notification;
     }
+
     [UIView animateWithDuration:0.5
+                          delay:0.0
+                        options:UIViewAnimationCurveEaseInOut
                      animations:^{
                          viewToRotateIn.layer.transform = CATransform3DIdentity;
                          viewToRotateOut.layer.transform = viewOutEndTransform;
                      }
                      completion:^(BOOL finished) {
-                         __notificationWindow.backgroundColor = [UIColor clearColor];
+
                          [viewToRotateOut removeFromSuperview];
                          if ([__notificationWindow.notificationQueue containsObject:viewToRotateOut]) {
                              [__notificationWindow.notificationQueue removeObject:viewToRotateOut];
@@ -353,6 +356,12 @@ static MPNotificationWindow * __notificationWindow = nil;
                              __notificationWindow.hidden = YES;
                              __notificationWindow.currentNotification = nil;
                          }
+                         
+                         [UIView animateWithDuration:0.3
+                                          animations:^{
+                                              __notificationWindow.backgroundColor = [UIColor clearColor];
+                                          }];
+
         
                      }];
     
