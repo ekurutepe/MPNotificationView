@@ -314,7 +314,7 @@ static MPNotificationWindow * __notificationWindow = nil;
     [[NSNotificationCenter defaultCenter] postNotificationName:kMPNotificationViewTapReceivedNotification
                                                         object:self];
     
-    [NSObject cancelPreviousPerformRequestsWithTarget:self
+    [NSObject cancelPreviousPerformRequestsWithTarget:[self class]
                                              selector:@selector(showNextNotification)
                                                object:nil];
     
