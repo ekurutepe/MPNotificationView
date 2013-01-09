@@ -131,7 +131,7 @@ static MPNotificationWindow * __notificationWindow = nil;
 
 
 @property (nonatomic, strong) OBGradientView * contentView;
-@property (nonatomic, copy) MPNotificationTouch tapBlock;
+@property (nonatomic, copy) MPNotificationSimpleAction tapBlock;
 @property (nonatomic, strong) NSTimer *showNextNotificationTimer;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureRecognizer;
 
@@ -247,7 +247,7 @@ static MPNotificationWindow * __notificationWindow = nil;
                                 detail:(NSString*)detail
                                  image:(UIImage*)image
                               duration:(NSTimeInterval)duration
-                         andTouchBlock:(MPNotificationTouch)block
+                         andTouchBlock:(MPNotificationSimpleAction)block
 {
     CGRect statusBarFrame = [UIApplication sharedApplication].statusBarFrame;
     
@@ -288,14 +288,14 @@ static MPNotificationWindow * __notificationWindow = nil;
 + (MPNotificationView*) notifyWithText:(NSString*)text
                                 detail:(NSString*)detail
                               duration:(NSTimeInterval)duration
-                         andTouchBlock:(MPNotificationTouch)block
+                         andTouchBlock:(MPNotificationSimpleAction)block
 {
     return [self notifyWithText:text detail:detail image:nil duration:duration andTouchBlock:block];
 }
 
 + (MPNotificationView*) notifyWithText:(NSString*)text
                                 detail:(NSString*)detail
-                         andTouchBlock:(MPNotificationTouch)block
+                         andTouchBlock:(MPNotificationSimpleAction)block
 {
     return [self notifyWithText:text detail:detail image:nil duration:2.0 andTouchBlock:block];
 }
@@ -308,14 +308,15 @@ static MPNotificationWindow * __notificationWindow = nil;
     }
     if ([_delegate respondsToSelector:@selector(tapReceivedForNotificationView:)])
     {
-        [_delegate tapReceivedForNotificationView:self];
+        [_delegate didTapOnNotificationView:self];
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kMPNotificationViewTapReceivedNotification
                                                         object:self];
     
-    [_showNextNotificationTimer invalidate];
-    _showNextNotificationTimer = nil;
+    [NSObject cancelPreviousPerformRequestsWithTarget:self
+                                             selector:@selector(showNextNotification)
+                                               object:nil];
     
     [MPNotificationView showNextNotification];
 }
@@ -402,18 +403,9 @@ static MPNotificationWindow * __notificationWindow = nil;
                          }
                          if ([viewToRotateIn isKindOfClass:[MPNotificationView class]] ){
                              MPNotificationView * notification = (MPNotificationView*)viewToRotateIn;
-                             
-                             notification.showNextNotificationTimer = [NSTimer scheduledTimerWithTimeInterval:notification.duration
-                                                                                                       target:self
-                                                                                                     selector:@selector(showNextNotification)
-                                                                                                     userInfo:nil
-                                                                                                      repeats:NO];
-                             
-//                             int64_t delayInSeconds = notification.duration;
-//                             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-//                             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-//                                 [self showNextNotification];
-//                             });
+                             [notification performSelector:@selector(showNextNotification)
+                                                withObject:nil
+                                                afterDelay:notification.duration];
                              
                              __notificationWindow.currentNotification = notification;
                              [__notificationWindow.notificationQueue removeObject:notification];

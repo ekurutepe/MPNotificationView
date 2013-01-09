@@ -61,7 +61,7 @@
 
 }
 
-- (void)tapReceivedForNotificationView:(MPNotificationView *)notificationView
+- (void)didTapOnNotificationView:(MPNotificationView *)notificationView
 {
     NSLog( @"Received touch for notification with text: %@", notificationView.textLabel.text );
 }

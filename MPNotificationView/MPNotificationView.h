@@ -10,7 +10,7 @@
 
 extern NSString *kMPNotificationViewTapReceivedNotification;
 
-typedef void (^MPNotificationTouch)(id);
+typedef void (^MPNotificationSimpleAction)(id);
 @protocol MPNotificationViewDelegate;
 
 @interface MPNotificationView : UIView
@@ -38,22 +38,22 @@ typedef void (^MPNotificationTouch)(id);
                                 detail:(NSString*)detail
                                  image:(UIImage*)image
                               duration:(NSTimeInterval)duration
-                         andTouchBlock:(MPNotificationTouch)block;
+                         andTouchBlock:(MPNotificationSimpleAction)block;
 
 + (MPNotificationView*) notifyWithText:(NSString*)text
                                 detail:(NSString*)detail
                               duration:(NSTimeInterval)duration
-                         andTouchBlock:(MPNotificationTouch)block;
+                         andTouchBlock:(MPNotificationSimpleAction)block;
 
 + (MPNotificationView*) notifyWithText:(NSString*)text
                                 detail:(NSString*)detail
-                         andTouchBlock:(MPNotificationTouch)block;
+                         andTouchBlock:(MPNotificationSimpleAction)block;
 
 @end
 
 @protocol MPNotificationViewDelegate <NSObject>
 
 @optional
-- (void)tapReceivedForNotificationView:(MPNotificationView *)notificationView;
+- (void)didTapOnNotificationView:(MPNotificationView *)notificationView;
 
 @end
