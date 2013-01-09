@@ -9,7 +9,18 @@
 #import "MPNotificationView.h"
 #import "OBGradientView.h"
 
-#define kMPNotificationHeight   40.0f
+#define kMPNotificationHeight    40.0f
+#define kMPNotificationIPadWidth 480.0f
+
+static CGRect notificationRect()
+{
+    if (UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation]))
+    {
+        return CGRectMake( 0.0f, 0.0f, [UIScreen mainScreen].bounds.size.height, kMPNotificationHeight);
+    }
+    
+    return CGRectMake( 0.0f, 0.0f, [UIScreen mainScreen].bounds.size.width, kMPNotificationHeight);
+}
 
 NSString *kMPNotificationViewTapReceivedNotification = @"kMPNotificationViewTapReceivedNotification";
 
@@ -55,32 +66,33 @@ NSString *kMPNotificationViewTapReceivedNotification = @"kMPNotificationViewTapR
                                                  selector:@selector(willRotateScreen:)
                                                      name:UIApplicationWillChangeStatusBarFrameNotification object:nil];
         
-        CGRect statusBarFrame = [UIApplication sharedApplication].statusBarFrame;
+        CGRect notificationBarFrame = notificationRect();
  
-        [self rotateStatusBarWithFrame:[NSValue valueWithCGRect:statusBarFrame]];
+        [self rotateStatusBarWithFrame:notificationBarFrame];
 
     }
     return self;
 }
 
-- (void)willRotateScreen:(NSNotification *)notification {
-    NSValue *frameValue = [notification.userInfo valueForKey:UIApplicationStatusBarFrameUserInfoKey];
-    
-    NSLog(@"will rotate to: %@", NSStringFromCGRect([frameValue CGRectValue]) );
+- (void)willRotateScreen:(NSNotification *)notification
+{
+    CGRect notificationBarFrame = notificationRect();
+
+    NSLog(@"will rotate to: %@", NSStringFromCGRect(notificationBarFrame) );
     if (NO == self.hidden) {
-        [self rotateStatusBarAnimatedWithFrame:frameValue];
+        [self rotateStatusBarAnimatedWithFrame:[NSValue valueWithCGRect:notificationBarFrame]];
     } else {
-        [self rotateStatusBarWithFrame:frameValue];
+        [self rotateStatusBarWithFrame:notificationBarFrame];
     }
 }
 
-- (void)rotateStatusBarAnimatedWithFrame:(NSValue *)frameValue {
-    
+- (void)rotateStatusBarAnimatedWithFrame:(NSValue *)frameValue
+{
     CGFloat duration = [UIApplication sharedApplication].statusBarOrientationAnimationDuration;
     [UIView animateWithDuration:duration animations:^{
         self.alpha = 0;
     } completion:^(BOOL finished) {
-        [self rotateStatusBarWithFrame:frameValue];
+        [self rotateStatusBarWithFrame:[frameValue CGRectValue]];
         [UIView animateWithDuration:duration animations:^{
             self.alpha = 1;
         }];
@@ -88,24 +100,34 @@ NSString *kMPNotificationViewTapReceivedNotification = @"kMPNotificationViewTapR
 }
 
 
-- (void)rotateStatusBarWithFrame:(NSValue *)frameValue {
-    CGRect frame = [frameValue CGRectValue];
+- (void)rotateStatusBarWithFrame:(CGRect)frame
+{
+    BOOL isPortrait = frame.size.width == [UIScreen mainScreen].bounds.size.width;
 
-    if (frame.size.height == 20) {
-        frame.size.height = kMPNotificationHeight;
+    if (isPortrait) { // portrait
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        {
+            frame.size.width = kMPNotificationIPadWidth;
+        }
+
         NSLog(@"portrait frame: %@", NSStringFromCGRect(frame));
-        if (frame.origin.y > 0) {
-            // upside down
+        if ([[UIDevice currentDevice] orientation] == UIDeviceOrientationPortraitUpsideDown) {
+            frame.origin.y = [UIScreen mainScreen].bounds.size.height - kMPNotificationHeight;
             self.transform = CGAffineTransformMakeRotation(M_PI);
         }
         else {
             self.transform = CGAffineTransformIdentity;
         }
     }
-    else if (frame.size.width == 20) {
+    else {
+        frame.size.height = frame.size.width;
         frame.size.width = kMPNotificationHeight;
-        if (frame.origin.x > 0) {
-            frame.origin.x = 280;
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        {
+            frame.size.height = kMPNotificationIPadWidth;
+        }
+        if ([[UIDevice currentDevice] orientation] == UIDeviceOrientationLandscapeLeft) {
+            frame.origin.x = [UIScreen mainScreen].bounds.size.width - frame.size.width;
             self.transform = CGAffineTransformMakeRotation(M_PI * 90.0f / 180.0f);
         }
         else {
@@ -115,7 +137,16 @@ NSString *kMPNotificationViewTapReceivedNotification = @"kMPNotificationViewTapR
     }
     
     self.frame = frame;
-    
+    CGPoint center = self.center;
+    if (isPortrait)
+    {
+        center.x = CGRectGetMidX([UIScreen mainScreen].bounds);
+    }
+    else
+    {
+        center.y = CGRectGetMidY([UIScreen mainScreen].bounds);
+    }
+    self.center = center;
 }
 
 @end
@@ -150,11 +181,8 @@ static MPNotificationWindow * __notificationWindow = nil;
 
 - (id)initWithFrame:(CGRect)frame
 {
-    BOOL isPortrait = UIDeviceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation);
-    CGRect statusBarFrame = [UIApplication sharedApplication].statusBarFrame;
-    CGFloat statusBarWidth = (isPortrait) ? statusBarFrame.size.width : statusBarFrame.size.height;
-
-
+    CGRect statusBarFrame = notificationRect();
+    CGFloat statusBarWidth = statusBarFrame.size.width;
     
     self = [super initWithFrame:frame];
     if (self) {
@@ -249,17 +277,8 @@ static MPNotificationWindow * __notificationWindow = nil;
                               duration:(NSTimeInterval)duration
                          andTouchBlock:(MPNotificationSimpleAction)block
 {
-    CGRect statusBarFrame = [UIApplication sharedApplication].statusBarFrame;
-    
     if (__notificationWindow == nil) {
-        BOOL isPortrait = UIDeviceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation);
-        if (isPortrait) {
-            statusBarFrame.size.height = kMPNotificationHeight;
-        }
-        else {
-            statusBarFrame.size.width = kMPNotificationHeight;
-        }
-        __notificationWindow = [[MPNotificationWindow alloc] initWithFrame:statusBarFrame];
+        __notificationWindow = [[MPNotificationWindow alloc] initWithFrame:notificationRect()];
         __notificationWindow.hidden = NO;
     }
     

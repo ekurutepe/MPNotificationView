@@ -27,6 +27,7 @@
                                              selector:@selector(tapReceivedNotificationHandler:)
                                                  name:kMPNotificationViewTapReceivedNotification
                                                object:nil];
+//    [[UIApplication sharedApplication] setStatusBarHidden:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -73,6 +74,11 @@
     {
         NSLog( @"Received touch for notification with text: %@", ((MPNotificationView *)notice.object).textLabel.text );
     }
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    return YES;
 }
 
 @end
