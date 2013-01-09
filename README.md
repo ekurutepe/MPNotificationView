@@ -1,7 +1,7 @@
 MPNotificationView
 ==================
 
-An in-app notification view that mimics the iOS 6 notification views which appear above the status bar
+An in-app notification view that mimics the iOS 6 notification views which appear above the status bar. Compatible with iOS 4.3 and above.
 
 ###Features:
 
