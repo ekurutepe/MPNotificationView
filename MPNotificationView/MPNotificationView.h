@@ -15,39 +15,39 @@ typedef void (^MPNotificationSimpleAction)(id);
 
 @interface MPNotificationView : UIView
 
-@property (nonatomic, strong) UILabel * textLabel;
-@property (nonatomic, strong) UILabel * detailTextLabel;
-@property (nonatomic, strong) UIImageView * imageView;
+@property (nonatomic, strong) UILabel *textLabel;
+@property (nonatomic, strong) UILabel *detailTextLabel;
+@property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, assign) id<MPNotificationViewDelegate> delegate;
 
 @property (nonatomic) NSTimeInterval duration;
 
-+ (MPNotificationView*) notifyWithText:(NSString*)text
-                                detail:(NSString*)detail
-                                 image:(UIImage*)image
-                           andDuration:(NSTimeInterval)duration;
++ (MPNotificationView *) notifyWithText:(NSString*)text
+                                 detail:(NSString*)detail
+                                  image:(UIImage*)image
+                            andDuration:(NSTimeInterval)duration;
 
-+ (MPNotificationView*) notifyWithText:(NSString*)text
-                                detail:(NSString*)detail
-                           andDuration:(NSTimeInterval)duration;
++ (MPNotificationView *) notifyWithText:(NSString*)text
+                                 detail:(NSString*)detail
+                            andDuration:(NSTimeInterval)duration;
 
-+ (MPNotificationView*) notifyWithText:(NSString*)text
-                             andDetail:(NSString*)detail;
++ (MPNotificationView *) notifyWithText:(NSString*)text
+                              andDetail:(NSString*)detail;
 
-+ (MPNotificationView*) notifyWithText:(NSString*)text
-                                detail:(NSString*)detail
-                                 image:(UIImage*)image
-                              duration:(NSTimeInterval)duration
-                         andTouchBlock:(MPNotificationSimpleAction)block;
++ (MPNotificationView *) notifyWithText:(NSString*)text
+                                 detail:(NSString*)detail
+                                  image:(UIImage*)image
+                               duration:(NSTimeInterval)duration
+                          andTouchBlock:(MPNotificationSimpleAction)block;
 
-+ (MPNotificationView*) notifyWithText:(NSString*)text
-                                detail:(NSString*)detail
-                              duration:(NSTimeInterval)duration
-                         andTouchBlock:(MPNotificationSimpleAction)block;
++ (MPNotificationView *) notifyWithText:(NSString*)text
+                                 detail:(NSString*)detail
+                               duration:(NSTimeInterval)duration
+                          andTouchBlock:(MPNotificationSimpleAction)block;
 
-+ (MPNotificationView*) notifyWithText:(NSString*)text
-                                detail:(NSString*)detail
-                         andTouchBlock:(MPNotificationSimpleAction)block;
++ (MPNotificationView *) notifyWithText:(NSString*)text
+                                 detail:(NSString*)detail
+                          andTouchBlock:(MPNotificationSimpleAction)block;
 
 @end
 
