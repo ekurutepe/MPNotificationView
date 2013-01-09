@@ -11,6 +11,8 @@
 
 #define kMPNotificationHeight   40.0f
 
+NSString *kMPNotificationViewTapReceivedNotification = @"kMPNotificationViewTapReceivedNotification";
+
 #pragma mark MPNotificationWindow
 @interface MPNotificationWindow : UIWindow
 
@@ -129,6 +131,9 @@ static MPNotificationWindow * __notificationWindow = nil;
 
 
 @property (nonatomic, strong) OBGradientView * contentView;
+@property (nonatomic, copy) MPNotificationSimpleAction tapBlock;
+@property (nonatomic, strong) NSTimer *showNextNotificationTimer;
+@property (nonatomic, strong) UITapGestureRecognizer *tapGestureRecognizer;
 
 + (void) showNextNotification;
 + (UIImage*) screenImageWithRect:(CGRect)rect;
@@ -136,6 +141,12 @@ static MPNotificationWindow * __notificationWindow = nil;
 @end
 
 @implementation MPNotificationView
+
+- (void)dealloc
+{
+    _delegate = nil;
+    [self removeGestureRecognizer:_tapGestureRecognizer];
+}
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -211,24 +222,35 @@ static MPNotificationWindow * __notificationWindow = nil;
 
 
 
-+ (MPNotificationView*) notifyWithText:(NSString*)text andDetail:(NSString*)detail
++ (MPNotificationView*) notifyWithText:(NSString*)text
+                             andDetail:(NSString*)detail
 {
-    return [self notifyWithText:text andDetail:detail andDuration:2.0];
+    return [self notifyWithText:text detail:detail andDuration:2.0];
 }
 
-+ (MPNotificationView*) notifyWithText:(NSString*)text andDetail:(NSString*)detail andDuration:(NSTimeInterval)duration
++ (MPNotificationView*) notifyWithText:(NSString*)text
+                                detail:(NSString*)detail
+                           andDuration:(NSTimeInterval)duration
 {
     return [self notifyWithText:text detail:detail image:nil andDuration:duration];
 }
 
 + (MPNotificationView*) notifyWithText:(NSString*)text
-                 detail:(NSString*)detail
-                  image:(UIImage*)image
-            andDuration:(NSTimeInterval)duration
+                                detail:(NSString*)detail
+                                 image:(UIImage*)image
+                           andDuration:(NSTimeInterval)duration
 {
-    
-    CGRect statusBarFrame = [UIApplication sharedApplication].statusBarFrame;
+    return [self notifyWithText:text detail:detail image:image duration:duration andTouchBlock:nil];
+}
 
++ (MPNotificationView*) notifyWithText:(NSString*)text
+                                detail:(NSString*)detail
+                                 image:(UIImage*)image
+                              duration:(NSTimeInterval)duration
+                         andTouchBlock:(MPNotificationSimpleAction)block
+{
+    CGRect statusBarFrame = [UIApplication sharedApplication].statusBarFrame;
+    
     if (__notificationWindow == nil) {
         BOOL isPortrait = UIDeviceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation);
         if (isPortrait) {
@@ -240,13 +262,19 @@ static MPNotificationWindow * __notificationWindow = nil;
         __notificationWindow = [[MPNotificationWindow alloc] initWithFrame:statusBarFrame];
         __notificationWindow.hidden = NO;
     }
-
+    
     MPNotificationView * notification = [[MPNotificationView alloc] initWithFrame:__notificationWindow.bounds];
     
     notification.textLabel.text = text;
     notification.detailTextLabel.text = detail;
     notification.imageView.image = image;
     notification.duration = duration;
+    notification.tapBlock = block;
+    
+    UITapGestureRecognizer *gr = [[UITapGestureRecognizer alloc] initWithTarget:notification
+                                                                         action:@selector(handleTap:)];
+    notification.tapGestureRecognizer = gr;
+    [notification addGestureRecognizer:gr];
     
     [__notificationWindow.notificationQueue addObject:notification];
     
@@ -255,6 +283,42 @@ static MPNotificationWindow * __notificationWindow = nil;
     }
     
     return notification;
+}
+
++ (MPNotificationView*) notifyWithText:(NSString*)text
+                                detail:(NSString*)detail
+                              duration:(NSTimeInterval)duration
+                         andTouchBlock:(MPNotificationSimpleAction)block
+{
+    return [self notifyWithText:text detail:detail image:nil duration:duration andTouchBlock:block];
+}
+
++ (MPNotificationView*) notifyWithText:(NSString*)text
+                                detail:(NSString*)detail
+                         andTouchBlock:(MPNotificationSimpleAction)block
+{
+    return [self notifyWithText:text detail:detail image:nil duration:2.0 andTouchBlock:block];
+}
+
+- (void)handleTap:(UITapGestureRecognizer *)gestureRecognizer
+{
+    if (_tapBlock != nil)
+    {
+        _tapBlock(self);
+    }
+    if ([_delegate respondsToSelector:@selector(tapReceivedForNotificationView:)])
+    {
+        [_delegate didTapOnNotificationView:self];
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kMPNotificationViewTapReceivedNotification
+                                                        object:self];
+    
+    [NSObject cancelPreviousPerformRequestsWithTarget:self
+                                             selector:@selector(showNextNotification)
+                                               object:nil];
+    
+    [MPNotificationView showNextNotification];
 }
 
 + (void) showNextNotification {
@@ -267,9 +331,8 @@ static MPNotificationWindow * __notificationWindow = nil;
 
     }
     else {
-        viewToRotateOut = [[UIImageView alloc] initWithImage:
-                           [self screenImageWithRect:__notificationWindow.frame]];
-        viewToRotateOut.frame = __notificationWindow.bounds;
+        viewToRotateOut = [[UIImageView alloc] initWithFrame:__notificationWindow.bounds];
+        ((UIImageView *)viewToRotateOut).image = [self screenImageWithRect:__notificationWindow.frame];
         [__notificationWindow addSubview:viewToRotateOut];
         __notificationWindow.hidden = NO;
     }
@@ -340,12 +403,9 @@ static MPNotificationWindow * __notificationWindow = nil;
                          }
                          if ([viewToRotateIn isKindOfClass:[MPNotificationView class]] ){
                              MPNotificationView * notification = (MPNotificationView*)viewToRotateIn;
-                             
-                             int64_t delayInSeconds = notification.duration;
-                             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-                             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                                 [self showNextNotification];
-                             });
+                             [self performSelector:@selector(showNextNotification)
+                                        withObject:nil
+                                        afterDelay:notification.duration];
                              
                              __notificationWindow.currentNotification = notification;
                              [__notificationWindow.notificationQueue removeObject:notification];
@@ -372,19 +432,20 @@ static MPNotificationWindow * __notificationWindow = nil;
 {
 
     CALayer * layer = [[UIApplication sharedApplication] keyWindow].layer;
-    
-    UIGraphicsBeginImageContext(layer.frame.size);
+    CGFloat scale = [UIScreen mainScreen].scale;
+    UIGraphicsBeginImageContextWithOptions(layer.frame.size, NO, scale);
 
     [layer renderInContext:UIGraphicsGetCurrentContext()];
     UIImage *screenshot = UIGraphicsGetImageFromCurrentImageContext();
 
     UIGraphicsEndImageContext();
     
+    rect = CGRectMake(rect.origin.x * scale, rect.origin.y * scale, rect.size.width * scale, rect.size.height * scale);
     CGImageRef imageRef = CGImageCreateWithImageInRect([screenshot CGImage], rect);
-    UIImage *croppedScreenshot = [UIImage imageWithCGImage:imageRef];
+    UIImage *croppedScreenshot = [UIImage imageWithCGImage:imageRef
+                                                     scale:screenshot.scale
+                                               orientation:screenshot.imageOrientation];
     CGImageRelease(imageRef);
-
-
 
 
     UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;

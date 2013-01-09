@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MPNotificationView.h"
 
-@interface MPViewController : UIViewController
+@interface MPViewController : UIViewController<MPNotificationViewDelegate>
 
 -(IBAction) enqueueNotification1:(id)sender;
 -(IBAction) enqueueNotification2:(id)sender;
