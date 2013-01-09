@@ -403,9 +403,9 @@ static MPNotificationWindow * __notificationWindow = nil;
                          }
                          if ([viewToRotateIn isKindOfClass:[MPNotificationView class]] ){
                              MPNotificationView * notification = (MPNotificationView*)viewToRotateIn;
-                             [notification performSelector:@selector(showNextNotification)
-                                                withObject:nil
-                                                afterDelay:notification.duration];
+                             [self performSelector:@selector(showNextNotification)
+                                        withObject:nil
+                                        afterDelay:notification.duration];
                              
                              __notificationWindow.currentNotification = notification;
                              [__notificationWindow.notificationQueue removeObject:notification];
