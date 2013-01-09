@@ -144,6 +144,7 @@ static MPNotificationWindow * __notificationWindow = nil;
 
 - (void)dealloc
 {
+    _delegate = nil;
     [self removeGestureRecognizer:_tapGestureRecognizer];
 }
 
@@ -329,9 +330,8 @@ static MPNotificationWindow * __notificationWindow = nil;
 
     }
     else {
-        viewToRotateOut = [[UIImageView alloc] initWithImage:
-                           [self screenImageWithRect:__notificationWindow.frame]];
-        viewToRotateOut.frame = __notificationWindow.bounds;
+        viewToRotateOut = [[UIImageView alloc] initWithFrame:__notificationWindow.bounds];
+        ((UIImageView *)viewToRotateOut).image = [self screenImageWithRect:__notificationWindow.frame];
         [__notificationWindow addSubview:viewToRotateOut];
         __notificationWindow.hidden = NO;
     }
@@ -440,19 +440,20 @@ static MPNotificationWindow * __notificationWindow = nil;
 {
 
     CALayer * layer = [[UIApplication sharedApplication] keyWindow].layer;
-    
-    UIGraphicsBeginImageContext(layer.frame.size);
+    CGFloat scale = [UIScreen mainScreen].scale;
+    UIGraphicsBeginImageContextWithOptions(layer.frame.size, NO, scale);
 
     [layer renderInContext:UIGraphicsGetCurrentContext()];
     UIImage *screenshot = UIGraphicsGetImageFromCurrentImageContext();
 
     UIGraphicsEndImageContext();
     
+    rect = CGRectMake(rect.origin.x * scale, rect.origin.y * scale, rect.size.width * scale, rect.size.height * scale);
     CGImageRef imageRef = CGImageCreateWithImageInRect([screenshot CGImage], rect);
-    UIImage *croppedScreenshot = [UIImage imageWithCGImage:imageRef];
+    UIImage *croppedScreenshot = [UIImage imageWithCGImage:imageRef
+                                                     scale:screenshot.scale
+                                               orientation:screenshot.imageOrientation];
     CGImageRelease(imageRef);
-
-
 
 
     UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
