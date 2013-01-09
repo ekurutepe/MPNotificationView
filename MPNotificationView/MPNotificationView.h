@@ -8,19 +8,52 @@
 
 #import <UIKit/UIKit.h>
 
+extern NSString *kMPNotificationViewTapReceivedNotification;
+
+typedef void (^MPNotificationTouch)(id);
+@protocol MPNotificationViewDelegate;
+
 @interface MPNotificationView : UIView
 
 @property (nonatomic, strong) UILabel * textLabel;
 @property (nonatomic, strong) UILabel * detailTextLabel;
 @property (nonatomic, strong) UIImageView * imageView;
+@property (nonatomic, assign) id<MPNotificationViewDelegate> delegate;
 
 @property (nonatomic) NSTimeInterval duration;
 
 + (MPNotificationView*) notifyWithText:(NSString*)text
                                 detail:(NSString*)detail
                                  image:(UIImage*)image
-            andDuration:(NSTimeInterval)duration;
-+ (MPNotificationView*) notifyWithText:(NSString*)text andDetail:(NSString*)detail andDuration:(NSTimeInterval)duration;
-+ (MPNotificationView*) notifyWithText:(NSString*)text andDetail:(NSString*)detail;
+                           andDuration:(NSTimeInterval)duration;
+
++ (MPNotificationView*) notifyWithText:(NSString*)text
+                                detail:(NSString*)detail
+                           andDuration:(NSTimeInterval)duration;
+
++ (MPNotificationView*) notifyWithText:(NSString*)text
+                             andDetail:(NSString*)detail;
+
++ (MPNotificationView*) notifyWithText:(NSString*)text
+                                detail:(NSString*)detail
+                                 image:(UIImage*)image
+                              duration:(NSTimeInterval)duration
+                         andTouchBlock:(MPNotificationTouch)block;
+
++ (MPNotificationView*) notifyWithText:(NSString*)text
+                                detail:(NSString*)detail
+                              duration:(NSTimeInterval)duration
+                         andTouchBlock:(MPNotificationTouch)block;
+
++ (MPNotificationView*) notifyWithText:(NSString*)text
+                                detail:(NSString*)detail
+                         andTouchBlock:(MPNotificationTouch)block;
+
+@end
+
+@protocol MPNotificationViewDelegate <NSObject>
+
+@optional
+- (void)tapReceivedForNotificationView:(MPNotificationView *)notificationView;
 
 @end

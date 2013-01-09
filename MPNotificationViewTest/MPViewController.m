@@ -7,7 +7,6 @@
 //
 
 #import "MPViewController.h"
-#import "MPNotificationView.h"
 
 @interface MPViewController ()
 
@@ -15,10 +14,19 @@
 
 @implementation MPViewController
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(tapReceivedNotificationHandler:)
+                                                 name:kMPNotificationViewTapReceivedNotification
+                                               object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -30,7 +38,8 @@
 
 -(IBAction) enqueueNotification1:(id)sender
 {
-    [MPNotificationView notifyWithText:@"Hello World!" andDetail:@"This is a test"];
+    MPNotificationView *notification = [MPNotificationView notifyWithText:@"Hello World!" andDetail:@"This is a test"];
+    notification.delegate = self;
 }
 
 -(IBAction) enqueueNotification2:(id)sender
@@ -44,8 +53,26 @@
 
 -(IBAction) enqueueNotification3:(id)sender
 {
-    [MPNotificationView notifyWithText:@"Grumpy wizards" andDetail:@"make a toxic brew for the jovial queen"];
+    [MPNotificationView notifyWithText:@"Grumpy wizards"
+                                detail:@"make a toxic brew for the jovial queen"
+                         andTouchBlock:^(MPNotificationView *notificationView) {
+                             NSLog( @"Received touch for notification with text: %@", notificationView.textLabel.text );
+    }];
 
+}
+
+- (void)tapReceivedForNotificationView:(MPNotificationView *)notificationView
+{
+    NSLog( @"Received touch for notification with text: %@", notificationView.textLabel.text );
+}
+
+- (void)tapReceivedNotificationHandler:(NSNotification *)notice
+{
+    MPNotificationView *notificationView = (MPNotificationView *)notice.object;
+    if ([notificationView isKindOfClass:[MPNotificationView class]])
+    {
+        NSLog( @"Received touch for notification with text: %@", ((MPNotificationView *)notice.object).textLabel.text );
+    }
 }
 
 @end
