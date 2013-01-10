@@ -46,6 +46,18 @@ Or if you need to load the image async using `AFNetworking`:
                            
 ````
 
+Touch handling can be implemented using blocks:
+
+````
+    [MPNotificationView notifyWithText:@"Grumpy wizards"
+                                detail:@"make a toxic brew for the jovial queen"
+                         andTouchBlock:^(MPNotificationView *notificationView) {
+                             NSLog( @"Received touch for notification with text: %@", notificationView.textLabel.text );
+    }];
+````
+
+Also by specifying a delegate which implements the `MPNotificationViewDelegate` and finally by handling the `kMPNotificationViewTapReceivedNotification` notification.
+
 ###Contact:
 
 Developed by [Engin Kurutepe](https://www.twitter.com/engintepe) at [Moped](http://www.moped.com) in [Berlin](http://goo.gl/maps/Ivk0B)
@@ -55,7 +67,9 @@ Follow us on twitter: [@moped](https://www.twitter.com/moped)
 
 ###Thanks:
 
-Stole some ideas from [BWStatusOverlay](https://github.com/brunow/BWStatusBarOverlay) by Bruno Wernimont. Thanks.
+Thanks to [kovpas](https://github.com/kovpas) for his amazing contributions, including but not limited to proper iPad support.
+
+Also stole some ideas from [BWStatusOverlay](https://github.com/brunow/BWStatusBarOverlay) by Bruno Wernimont. Thanks. 
 
 ###License:
 
