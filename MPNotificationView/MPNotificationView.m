@@ -418,7 +418,7 @@ static CGFloat const __imagePadding = 8.0f;
     
     [UIView animateWithDuration:0.5
                           delay:0.0
-                        options:UIViewAnimationCurveEaseInOut
+                        options:UIViewAnimationOptionCurveEaseInOut
                      animations:^{
                          viewToRotateIn.layer.transform = CATransform3DIdentity;
                          viewToRotateOut.layer.transform = viewOutEndTransform;
