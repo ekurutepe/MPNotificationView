@@ -15,6 +15,7 @@
 
 static CGRect notificationRect()
 {
+    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications]; 
     if (UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation]))
     {
         return CGRectMake(0.0f, 0.0f, [UIScreen mainScreen].bounds.size.height, kMPNotificationHeight);
