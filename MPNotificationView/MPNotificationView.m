@@ -15,7 +15,7 @@
 
 static CGRect notificationRect()
 {
-    if (UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation]))
+    if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))
     {
         return CGRectMake(0.0f, 0.0f, [UIScreen mainScreen].bounds.size.height, kMPNotificationHeight);
     }
@@ -66,7 +66,7 @@ NSString *kMPNotificationViewTapReceivedNotification = @"kMPNotificationViewTapR
                                                      name:UIApplicationWillChangeStatusBarFrameNotification
                                                    object:nil];
         
-        [self rotateStatusBarWithFrame:frame];
+        [self rotateNotificationWindow];
     }
     
     return self;
@@ -74,26 +74,28 @@ NSString *kMPNotificationViewTapReceivedNotification = @"kMPNotificationViewTapR
 
 - (void) willRotateScreen:(NSNotification *)notification
 {
-    CGRect notificationBarFrame = notificationRect();
-    
     if (self.hidden)
     {
-        [self rotateStatusBarWithFrame:notificationBarFrame];
+        double delayInSeconds = [UIApplication sharedApplication].statusBarOrientationAnimationDuration;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+           [self rotateNotificationWindow]; 
+        });
     }
     else
     {
-        [self rotateStatusBarAnimatedWithFrame:notificationBarFrame];
+        [self rotateNotificationWindowAnimated];
     }
 }
 
-- (void) rotateStatusBarAnimatedWithFrame:(CGRect)frame
+- (void) rotateNotificationWindowAnimated
 {
     CGFloat duration = [UIApplication sharedApplication].statusBarOrientationAnimationDuration;
     [UIView animateWithDuration:duration
                      animations:^{
                          self.alpha = 0;
                      } completion:^(BOOL finished) {
-                         [self rotateStatusBarWithFrame:frame];
+                         [self rotateNotificationWindow];
                          [UIView animateWithDuration:duration
                                           animations:^{
                                               self.alpha = 1;
@@ -102,8 +104,9 @@ NSString *kMPNotificationViewTapReceivedNotification = @"kMPNotificationViewTapR
 }
 
 
-- (void) rotateStatusBarWithFrame:(CGRect)frame
+- (void) rotateNotificationWindow
 {
+    CGRect frame = notificationRect();
     BOOL isPortrait = (frame.size.width == [UIScreen mainScreen].bounds.size.width);
     
     if (isPortrait)
@@ -467,18 +470,18 @@ static CGFloat const __imagePadding = 8.0f;
                                                orientation:screenshot.imageOrientation];
     CGImageRelease(imageRef);
     
-    UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
+    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
     UIImageOrientation imageOrientation = UIImageOrientationUp;
     
     switch (orientation)
     {
-        case UIDeviceOrientationPortraitUpsideDown:
+        case UIInterfaceOrientationPortraitUpsideDown:
             imageOrientation = UIImageOrientationDown;
             break;
-        case UIDeviceOrientationLandscapeRight:
+        case UIInterfaceOrientationLandscapeLeft:
             imageOrientation = UIImageOrientationRight;
             break;
-        case UIDeviceOrientationLandscapeLeft:
+        case UIInterfaceOrientationLandscapeRight:
             imageOrientation = UIImageOrientationLeft;
             break;
         default:
