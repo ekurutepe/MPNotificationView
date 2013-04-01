@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
-		<int key="IBDocument.SystemTarget">1536</int>
-		<string key="IBDocument.SystemVersion">11G63b</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2840</string>
-		<string key="IBDocument.AppKitVersion">1138.51</string>
-		<string key="IBDocument.HIToolboxVersion">569.00</string>
+		<int key="IBDocument.SystemTarget">1552</int>
+		<string key="IBDocument.SystemVersion">12D78</string>
+		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
+		<string key="IBDocument.AppKitVersion">1187.37</string>
+		<string key="IBDocument.HIToolboxVersion">626.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-			<string key="NS.object.0">1926</string>
+			<string key="NS.object.0">2083</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBProxyObject</string>
@@ -37,11 +37,28 @@
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">1316</int>
 				<array class="NSMutableArray" key="NSSubviews">
+					<object class="IBUINavigationBar" id="628380634">
+						<reference key="NSNextResponder" ref="966032202"/>
+						<int key="NSvFlags">1314</int>
+						<object class="NSPSMatrix" key="NSFrameMatrix"/>
+						<string key="NSFrameSize">{320, 44}</string>
+						<reference key="NSSuperview" ref="966032202"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="570061368"/>
+						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+						<array key="IBUIItems">
+							<object class="IBUINavigationItem" id="724274882">
+								<reference key="IBUINavigationBar" ref="628380634"/>
+								<string key="IBUITitle">Notifications</string>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+							</object>
+						</array>
+					</object>
 					<object class="IBUIButton" id="570061368">
 						<reference key="NSNextResponder" ref="966032202"/>
 						<int key="NSvFlags">1294</int>
 						<object class="NSPSMatrix" key="NSFrameMatrix"/>
-						<string key="NSFrame">{{20, 366}, {280, 44}}</string>
+						<string key="NSFrame">{{20, 307}, {280, 44}}</string>
 						<reference key="NSSuperview" ref="966032202"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1030798379"/>
@@ -77,7 +94,7 @@
 						<reference key="NSNextResponder" ref="966032202"/>
 						<int key="NSvFlags">1294</int>
 						<object class="NSPSMatrix" key="NSFrameMatrix"/>
-						<string key="NSFrame">{{20, 426}, {280, 44}}</string>
+						<string key="NSFrame">{{20, 367}, {280, 44}}</string>
 						<reference key="NSSuperview" ref="966032202"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="582721326"/>
@@ -100,7 +117,7 @@
 						<reference key="NSNextResponder" ref="966032202"/>
 						<int key="NSvFlags">1294</int>
 						<object class="NSPSMatrix" key="NSFrameMatrix"/>
-						<string key="NSFrame">{{20, 485}, {280, 44}}</string>
+						<string key="NSFrame">{{20, 426}, {280, 44}}</string>
 						<reference key="NSSuperview" ref="966032202"/>
 						<reference key="NSWindow"/>
 						<bool key="IBUIOpaque">NO</bool>
@@ -118,22 +135,27 @@
 						<reference key="IBUIFontDescription" ref="832410450"/>
 						<reference key="IBUIFont" ref="702146649"/>
 					</object>
-					<object class="IBUINavigationBar" id="628380634">
+					<object class="IBUIButton" id="651269962">
 						<reference key="NSNextResponder" ref="966032202"/>
-						<int key="NSvFlags">1314</int>
+						<int key="NSvFlags">1294</int>
 						<object class="NSPSMatrix" key="NSFrameMatrix"/>
-						<string key="NSFrameSize">{320, 44}</string>
+						<string key="NSFrame">{{20, 485}, {280, 44}}</string>
 						<reference key="NSSuperview" ref="966032202"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="570061368"/>
+						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<array key="IBUIItems">
-							<object class="IBUINavigationItem" id="724274882">
-								<reference key="IBUINavigationBar" ref="628380634"/>
-								<string key="IBUITitle">Notifications</string>
-								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-							</object>
-						</array>
+						<int key="IBUIContentHorizontalAlignment">0</int>
+						<int key="IBUIContentVerticalAlignment">0</int>
+						<int key="IBUIButtonType">1</int>
+						<string key="IBUINormalTitle">Notification 4 (Nib)</string>
+						<reference key="IBUIHighlightedTitleColor" ref="707667199"/>
+						<object class="NSColor" key="IBUINormalTitleColor">
+							<int key="NSColorSpace">1</int>
+							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
+						</object>
+						<reference key="IBUINormalTitleShadowColor" ref="396199973"/>
+						<reference key="IBUIFontDescription" ref="832410450"/>
+						<reference key="IBUIFont" ref="702146649"/>
 					</object>
 				</array>
 				<object class="NSPSMatrix" key="NSFrameMatrix"/>
@@ -4575,6 +4597,15 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 					</object>
 					<int key="connectionID">26</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">enqueueNotification4:</string>
+						<reference key="source" ref="651269962"/>
+						<reference key="destination" ref="841351856"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">31</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -4599,10 +4630,11 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 						<int key="objectID">3</int>
 						<reference key="object" ref="966032202"/>
 						<array class="NSMutableArray" key="children">
+							<reference ref="628380634"/>
+							<reference ref="651269962"/>
 							<reference ref="570061368"/>
 							<reference ref="1030798379"/>
 							<reference ref="582721326"/>
-							<reference ref="628380634"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -4634,6 +4666,11 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 						<reference key="object" ref="724274882"/>
 						<reference key="parent" ref="628380634"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">29</int>
+						<reference key="object" ref="651269962"/>
+						<reference key="parent" ref="966032202"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -4641,6 +4678,9 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 				<string key="-1.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="-2.CustomClassName">UIResponder</string>
 				<string key="-2.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="29.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<reference key="29.IBUserGuides" ref="0"/>
+				<boolean value="NO" key="29.showNotes"/>
 				<string key="3.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<reference key="3.IBUserGuides" ref="0"/>
 				<boolean value="NO" key="3.showNotes"/>
@@ -4663,7 +4703,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">28</int>
+			<int key="maxID">31</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -4674,6 +4714,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 						<string key="enqueueNotification1:">id</string>
 						<string key="enqueueNotification2:">id</string>
 						<string key="enqueueNotification3:">id</string>
+						<string key="enqueueNotification4:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
 						<object class="IBActionInfo" key="enqueueNotification1:">
@@ -4688,6 +4729,10 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 							<string key="name">enqueueNotification3:</string>
 							<string key="candidateClassName">id</string>
 						</object>
+						<object class="IBActionInfo" key="enqueueNotification4:">
+							<string key="name">enqueueNotification4:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
@@ -4700,6 +4745,6 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
-		<string key="IBCocoaTouchPluginVersion">1926</string>
+		<string key="IBCocoaTouchPluginVersion">2083</string>
 	</data>
 </archive>

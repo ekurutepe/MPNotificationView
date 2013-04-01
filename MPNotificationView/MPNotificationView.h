@@ -15,10 +15,10 @@ typedef void (^MPNotificationSimpleAction)(id);
 
 @interface MPNotificationView : UIView
 
-@property (nonatomic, strong) UILabel *textLabel;
-@property (nonatomic, strong) UILabel *detailTextLabel;
-@property (nonatomic, strong) UIImageView *imageView;
-@property (nonatomic, assign) id<MPNotificationViewDelegate> delegate;
+@property (nonatomic, strong) IBOutlet UILabel *textLabel;
+@property (nonatomic, strong) IBOutlet UILabel *detailTextLabel;
+@property (nonatomic, strong) IBOutlet UIImageView *imageView;
+@property (nonatomic, assign) IBOutlet id<MPNotificationViewDelegate> delegate;
 
 @property (nonatomic) NSTimeInterval duration;
 
@@ -47,6 +47,13 @@ typedef void (^MPNotificationSimpleAction)(id);
 
 + (MPNotificationView *) notifyWithText:(NSString*)text
                                  detail:(NSString*)detail
+                          andTouchBlock:(MPNotificationSimpleAction)block;
+
++ (MPNotificationView *) notifyWithText:(NSString*)text
+                                 detail:(NSString*)detail
+                                  image:(UIImage*)image
+                               duration:(NSTimeInterval)duration
+                                nibName:(NSString *)nibName
                           andTouchBlock:(MPNotificationSimpleAction)block;
 
 @end

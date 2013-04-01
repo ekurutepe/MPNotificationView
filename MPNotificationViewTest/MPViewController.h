@@ -14,5 +14,6 @@
 -(IBAction) enqueueNotification1:(id)sender;
 -(IBAction) enqueueNotification2:(id)sender;
 -(IBAction) enqueueNotification3:(id)sender;
+-(IBAction) enqueueNotification4:(id)sender;
 
 @end

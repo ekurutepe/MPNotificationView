@@ -311,13 +311,38 @@ static CGFloat const __imagePadding = 8.0f;
                                duration:(NSTimeInterval)duration
                           andTouchBlock:(MPNotificationSimpleAction)block
 {
+    return [self notifyWithText:text
+                         detail:detail
+                          image:image
+                       duration:duration
+                        nibName:nil
+                  andTouchBlock:block];
+}
+
++ (MPNotificationView *) notifyWithText:(NSString*)text
+                                 detail:(NSString*)detail
+                                  image:(UIImage*)image
+                               duration:(NSTimeInterval)duration
+                                nibName:(NSString *)nibName
+                          andTouchBlock:(MPNotificationSimpleAction)block
+{
     if (__notificationWindow == nil)
     {
         __notificationWindow = [[MPNotificationWindow alloc] initWithFrame:notificationRect()];
         __notificationWindow.hidden = NO;
     }
     
-    MPNotificationView * notification = [[MPNotificationView alloc] initWithFrame:__notificationWindow.bounds];
+    MPNotificationView * notification;
+    if (!nibName)
+    {
+        notification = [[MPNotificationView alloc] initWithFrame:__notificationWindow.bounds];
+    }
+    else
+    {
+        notification = [[NSBundle mainBundle] loadNibNamed:nibName
+                                                     owner:nil
+                                                   options:nil][0];
+    }
     
     notification.textLabel.text = text;
     notification.detailTextLabel.text = detail;
