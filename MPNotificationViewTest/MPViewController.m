@@ -7,12 +7,21 @@
 //
 
 #import "MPViewController.h"
+#import "MyNotificationView.h"
 
 @interface MPViewController ()
 
 @end
 
 @implementation MPViewController
+
++ (void)initialize
+{
+    [MPNotificationView registerNibNameOrClass:@"CustomNotificationView"
+                        forNotificationsOfType:@"Custom"];
+    [MPNotificationView registerNibNameOrClass:[MyNotificationView class]
+                        forNotificationsOfType:@"Blinking"];
+}
 
 - (void)dealloc
 {
@@ -64,13 +73,25 @@
 -(IBAction) enqueueNotification4:(id)sender
 {
     [MPNotificationView notifyWithText:@"Custom notification"
-                                detail:@"loaded from a Nib file"
+                                detail:@"loaded from a registered Nib file"
                                  image:[UIImage imageNamed:@"mopedDog.jpeg"]
                               duration:2.0
-                               nibName:@"CustomNotificationView"
+                                  type:@"Custom"
                          andTouchBlock:^(MPNotificationView *notificationView) {
                              NSLog( @"Received touch for notification with text: %@", notificationView.textLabel.text );
     }];
+}
+
+- (IBAction)enqueueNotification5:(id)sender
+{
+    [MPNotificationView notifyWithText:@"Custom notification"
+                                detail:@"instantiated from a registered Class"
+                                 image:[UIImage imageNamed:@"mopedDog.jpeg"]
+                              duration:2.0
+                                  type:@"Blinking"
+                         andTouchBlock:^(MPNotificationView *notificationView) {
+                             NSLog( @"Received touch for notification with text: %@", notificationView.textLabel.text );
+                         }];
 }
 
 - (void)didTapOnNotificationView:(MPNotificationView *)notificationView

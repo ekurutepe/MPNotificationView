@@ -53,8 +53,11 @@ typedef void (^MPNotificationSimpleAction)(id);
                                  detail:(NSString*)detail
                                   image:(UIImage*)image
                                duration:(NSTimeInterval)duration
-                                nibName:(NSString *)nibName
+                                   type:(NSString *)type
                           andTouchBlock:(MPNotificationSimpleAction)block;
+
++ (void)registerNibNameOrClass:(id)nibNameOrClass
+        forNotificationsOfType:(NSString *)type;
 
 @end
 

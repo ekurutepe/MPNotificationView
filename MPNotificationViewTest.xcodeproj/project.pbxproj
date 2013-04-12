@@ -23,6 +23,7 @@
 		870D5D3816971F1500AB84FB /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 870D5D3716971F1500AB84FB /* LICENSE */; };
 		870D5D3A1697238000AB84FB /* mopedDog.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 870D5D391697238000AB84FB /* mopedDog.jpeg */; };
 		A912ED42169DA20B0016A254 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A912ED41169DA20B0016A254 /* MainViewController.xib */; };
+		E58B5ACE1717D39C008BB0E0 /* MyNotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = E58B5ACD1717D39C008BB0E0 /* MyNotificationView.m */; };
 		E5B5558317095A960039E63F /* CustomNotificationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5B5558217095A960039E63F /* CustomNotificationView.xib */; };
 /* End PBXBuildFile section */
 
@@ -50,6 +51,8 @@
 		870D5D3716971F1500AB84FB /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		870D5D391697238000AB84FB /* mopedDog.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mopedDog.jpeg; sourceTree = "<group>"; };
 		A912ED41169DA20B0016A254 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
+		E58B5ACC1717D39C008BB0E0 /* MyNotificationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyNotificationView.h; sourceTree = "<group>"; };
+		E58B5ACD1717D39C008BB0E0 /* MyNotificationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyNotificationView.m; sourceTree = "<group>"; };
 		E5B5558217095A960039E63F /* CustomNotificationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomNotificationView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -108,6 +111,8 @@
 				870D5D141696DA5A00AB84FB /* MPViewController.h */,
 				870D5D151696DA5A00AB84FB /* MPViewController.m */,
 				E5B5558217095A960039E63F /* CustomNotificationView.xib */,
+				E58B5ACC1717D39C008BB0E0 /* MyNotificationView.h */,
+				E58B5ACD1717D39C008BB0E0 /* MyNotificationView.m */,
 				870D5D001696DA5A00AB84FB /* Supporting Files */,
 			);
 			path = MPNotificationViewTest;
@@ -221,6 +226,7 @@
 				870D5D161696DA5A00AB84FB /* MPViewController.m in Sources */,
 				870D5D231696DA9E00AB84FB /* MPNotificationView.m in Sources */,
 				870D5D281696DC9400AB84FB /* OBGradientView.m in Sources */,
+				E58B5ACE1717D39C008BB0E0 /* MyNotificationView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

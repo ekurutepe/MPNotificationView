@@ -13,6 +13,8 @@
 #define kMPNotificationIPadWidth 480.0f
 #define RADIANS(deg) ((deg) * M_PI / 180.0f)
 
+static NSMutableDictionary * _registeredTypes;
+
 static CGRect notificationRect()
 {
     if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))
@@ -79,7 +81,7 @@ NSString *kMPNotificationViewTapReceivedNotification = @"kMPNotificationViewTapR
         double delayInSeconds = [UIApplication sharedApplication].statusBarOrientationAnimationDuration;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-           [self rotateNotificationWindow]; 
+            [self rotateNotificationWindow];
         });
     }
     else
@@ -315,7 +317,7 @@ static CGFloat const __imagePadding = 8.0f;
                          detail:detail
                           image:image
                        duration:duration
-                        nibName:nil
+                           type:nil
                   andTouchBlock:block];
 }
 
@@ -323,7 +325,7 @@ static CGFloat const __imagePadding = 8.0f;
                                  detail:(NSString*)detail
                                   image:(UIImage*)image
                                duration:(NSTimeInterval)duration
-                                nibName:(NSString *)nibName
+                                   type:(NSString *)type
                           andTouchBlock:(MPNotificationSimpleAction)block
 {
     if (__notificationWindow == nil)
@@ -333,15 +335,21 @@ static CGFloat const __imagePadding = 8.0f;
     }
     
     MPNotificationView * notification;
-    if (!nibName)
+    id nibNameOrClass = type ? _registeredTypes[type] : nil;
+    if ([nibNameOrClass isKindOfClass:[NSString class]])
+    {
+        notification = [[NSBundle mainBundle] loadNibNamed:nibNameOrClass
+                                                     owner:nil
+                                                   options:nil][0];
+        notification.frame = __notificationWindow.bounds;
+    }
+    else if (!nibNameOrClass)
     {
         notification = [[MPNotificationView alloc] initWithFrame:__notificationWindow.bounds];
     }
     else
     {
-        notification = [[NSBundle mainBundle] loadNibNamed:nibName
-                                                     owner:nil
-                                                   options:nil][0];
+        notification = [[nibNameOrClass alloc] initWithFrame:__notificationWindow.bounds];
     }
     
     notification.textLabel.text = text;
@@ -363,6 +371,15 @@ static CGFloat const __imagePadding = 8.0f;
     }
     
     return notification;
+}
+
++ (void)registerNibNameOrClass:(id)nibNameOrClass
+        forNotificationsOfType:(NSString *)type
+{
+    if (!_registeredTypes)
+        _registeredTypes = [NSMutableDictionary dictionary];
+    
+    _registeredTypes[type] = nibNameOrClass;
 }
 
 - (void) handleTap:(UITapGestureRecognizer *)gestureRecognizer
@@ -430,7 +447,7 @@ static CGFloat const __imagePadding = 8.0f;
     CATransform3D viewOutEndTransform = CATransform3DMakeRotation(RADIANS(120), 1.0, 0.0, 0.0);
     viewOutEndTransform.m34 = -1.0 / 200.0;
     
-    [__notificationWindow addSubview:viewToRotateIn];    
+    [__notificationWindow addSubview:viewToRotateIn];
     __notificationWindow.backgroundColor = [UIColor blackColor];
     
     viewToRotateIn.layer.transform = viewInStartTransform;
@@ -471,7 +488,7 @@ static CGFloat const __imagePadding = 8.0f;
                              __notificationWindow.currentNotification = nil;
                          }
                          
-                          __notificationWindow.backgroundColor = [UIColor clearColor];
+                         __notificationWindow.backgroundColor = [UIColor clearColor];
                      }];
 }
 
