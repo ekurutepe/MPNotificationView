@@ -456,9 +456,13 @@ static CGFloat const __imagePadding = 8.0f;
                          if ([viewToRotateIn isKindOfClass:[MPNotificationView class]])
                          {
                              MPNotificationView *notification = (MPNotificationView*)viewToRotateIn;
-                             [self performSelector:@selector(showNextNotification)
-                                        withObject:nil
-                                        afterDelay:notification.duration];
+                             
+                             if (notification.duration > 0.0)
+                             {
+                                 [self performSelector:@selector(showNextNotification)
+                                            withObject:nil
+                                            afterDelay:notification.duration];
+                             }
                              
                              __notificationWindow.currentNotification = notification;
                              [__notificationWindow.notificationQueue removeObject:notification];
