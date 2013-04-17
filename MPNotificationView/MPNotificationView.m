@@ -176,7 +176,6 @@ static CGFloat const __imagePadding = 8.0f;
 @property (nonatomic, copy) MPNotificationSimpleAction tapBlock;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureRecognizer;
 
-+ (void) showNextNotification;
 + (UIImage*) screenImageWithRect:(CGRect)rect;
 
 @end
@@ -380,15 +379,15 @@ static CGFloat const __imagePadding = 8.0f;
     [[NSNotificationCenter defaultCenter] postNotificationName:kMPNotificationViewTapReceivedNotification
                                                         object:self];
     
-    [NSObject cancelPreviousPerformRequestsWithTarget:[self class]
-                                             selector:@selector(showNextNotification)
-                                               object:nil];
-    
     [MPNotificationView showNextNotification];
 }
 
 + (void) showNextNotification
 {
+    [NSObject cancelPreviousPerformRequestsWithTarget:[self class]
+                                             selector:@selector(showNextNotification)
+                                               object:nil];
+    
     UIView *viewToRotateOut = nil;
     UIImage *screenshot = [self screenImageWithRect:__notificationWindow.frame];
     
