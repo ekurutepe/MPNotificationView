@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class MPNotificationView;
+@protocol MPNotificationViewDelegate;
+
 extern NSString *kMPNotificationViewTapReceivedNotification;
 
-typedef void (^MPNotificationSimpleAction)(id);
-@protocol MPNotificationViewDelegate;
+typedef void (^MPNotificationSimpleAction)(MPNotificationView * view);
 
 @interface MPNotificationView : UIView
 
