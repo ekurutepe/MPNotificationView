@@ -58,6 +58,8 @@ typedef void (^MPNotificationSimpleAction)(MPNotificationView * view);
                                 nibName:(NSString *)nibName
                           andTouchBlock:(MPNotificationSimpleAction)block;
 
++ (void) showNextNotification;
+
 @end
 
 @protocol MPNotificationViewDelegate <NSObject>

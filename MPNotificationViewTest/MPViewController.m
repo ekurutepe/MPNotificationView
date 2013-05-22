@@ -63,14 +63,19 @@
 
 -(IBAction) enqueueNotification4:(id)sender
 {
-    [MPNotificationView notifyWithText:@"Custom notification"
+    [MPNotificationView notifyWithText:@"Error notification"
                                 detail:@"loaded from a Nib file"
                                  image:[UIImage imageNamed:@"mopedDog.jpeg"]
-                              duration:2.0
+                              duration:0
                                nibName:@"CustomNotificationView"
                          andTouchBlock:^(MPNotificationView *notificationView) {
                              NSLog( @"Received touch for notification with text: %@", notificationView.textLabel.text );
     }];
+}
+
+- (IBAction)showNextNotification:(id)sender
+{
+    [MPNotificationView showNextNotification];
 }
 
 - (void)didTapOnNotificationView:(MPNotificationView *)notificationView
