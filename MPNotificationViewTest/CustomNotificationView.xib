@@ -46,7 +46,6 @@
 								<string key="NSFrame">{{280, 0}, {40, 40}}</string>
 								<reference key="NSSuperview" ref="160001523"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<int key="IBUIContentMode">2</int>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
@@ -131,7 +130,7 @@
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MC4yMDAwMDAwMDMgMC4yMDAwMDAwMDMgMC4yMDAwMDAwMDMgMC43NQA</bytes>
+							<bytes key="NSRGB">MC43MjIyMjg1NTg0IDAgMCAwLjc1AA</bytes>
 						</object>
 						<object class="IBUISimulatedSizeMetrics" key="IBUISimulatedDestinationMetrics" id="327177637">
 							<string key="IBUISimulatedSizeMetricsClass">IBUISimulatedFreeformSizeMetricsSentinel</string>
@@ -252,7 +251,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">13</int>
+			<int key="maxID">15</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">

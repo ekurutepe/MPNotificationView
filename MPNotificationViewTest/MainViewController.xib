@@ -35,7 +35,7 @@
 			</object>
 			<object class="IBUIView" id="966032202">
 				<reference key="NSNextResponder"/>
-				<int key="NSvFlags">1316</int>
+				<int key="NSvFlags">1298</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="IBUINavigationBar" id="628380634">
 						<reference key="NSNextResponder" ref="966032202"/>
@@ -44,7 +44,7 @@
 						<string key="NSFrameSize">{320, 44}</string>
 						<reference key="NSSuperview" ref="966032202"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="570061368"/>
+						<reference key="NSNextKeyView" ref="45763474"/>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<array key="IBUIItems">
 							<object class="IBUINavigationItem" id="724274882">
@@ -58,7 +58,7 @@
 						<reference key="NSNextResponder" ref="966032202"/>
 						<int key="NSvFlags">1294</int>
 						<object class="NSPSMatrix" key="NSFrameMatrix"/>
-						<string key="NSFrame">{{20, 307}, {280, 44}}</string>
+						<string key="NSFrame">{{20, 308}, {280, 44}}</string>
 						<reference key="NSSuperview" ref="966032202"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1030798379"/>
@@ -120,6 +120,7 @@
 						<string key="NSFrame">{{20, 426}, {280, 44}}</string>
 						<reference key="NSSuperview" ref="966032202"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="651269962"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
@@ -142,12 +143,36 @@
 						<string key="NSFrame">{{20, 485}, {280, 44}}</string>
 						<reference key="NSSuperview" ref="966032202"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
 						<int key="IBUIButtonType">1</int>
 						<string key="IBUINormalTitle">Notification 4 (Nib)</string>
+						<reference key="IBUIHighlightedTitleColor" ref="707667199"/>
+						<object class="NSColor" key="IBUINormalTitleColor">
+							<int key="NSColorSpace">1</int>
+							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
+						</object>
+						<reference key="IBUINormalTitleShadowColor" ref="396199973"/>
+						<reference key="IBUIFontDescription" ref="832410450"/>
+						<reference key="IBUIFont" ref="702146649"/>
+					</object>
+					<object class="IBUIButton" id="45763474">
+						<reference key="NSNextResponder" ref="966032202"/>
+						<int key="NSvFlags">1313</int>
+						<object class="NSPSMatrix" key="NSFrameMatrix"/>
+						<string key="NSFrame">{{159, 60}, {143, 44}}</string>
+						<reference key="NSSuperview" ref="966032202"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="570061368"/>
+						<bool key="IBUIOpaque">NO</bool>
+						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+						<int key="IBUIContentHorizontalAlignment">0</int>
+						<int key="IBUIContentVerticalAlignment">0</int>
+						<int key="IBUIButtonType">1</int>
+						<string key="IBUINormalTitle">Force show next</string>
 						<reference key="IBUIHighlightedTitleColor" ref="707667199"/>
 						<object class="NSColor" key="IBUINormalTitleColor">
 							<int key="NSColorSpace">1</int>
@@ -4606,6 +4631,15 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 					</object>
 					<int key="connectionID">31</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">showNextNotification:</string>
+						<reference key="source" ref="45763474"/>
+						<reference key="destination" ref="841351856"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">35</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -4635,6 +4669,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 							<reference ref="570061368"/>
 							<reference ref="1030798379"/>
 							<reference ref="582721326"/>
+							<reference ref="45763474"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -4671,6 +4706,11 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 						<reference key="object" ref="651269962"/>
 						<reference key="parent" ref="966032202"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">33</int>
+						<reference key="object" ref="45763474"/>
+						<reference key="parent" ref="966032202"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -4684,6 +4724,9 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 				<string key="3.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<reference key="3.IBUserGuides" ref="0"/>
 				<boolean value="NO" key="3.showNotes"/>
+				<string key="33.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<reference key="33.IBUserGuides" ref="0"/>
+				<boolean value="NO" key="33.showNotes"/>
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<reference key="4.IBUserGuides" ref="0"/>
 				<boolean value="NO" key="4.showNotes"/>
@@ -4703,7 +4746,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">31</int>
+			<int key="maxID">35</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -4715,6 +4758,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 						<string key="enqueueNotification2:">id</string>
 						<string key="enqueueNotification3:">id</string>
 						<string key="enqueueNotification4:">id</string>
+						<string key="showNextNotification:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
 						<object class="IBActionInfo" key="enqueueNotification1:">
@@ -4731,6 +4775,10 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 						</object>
 						<object class="IBActionInfo" key="enqueueNotification4:">
 							<string key="name">enqueueNotification4:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="showNextNotification:">
+							<string key="name">showNextNotification:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 					</dictionary>
