@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class MPNotificationView;
+@protocol MPNotificationViewDelegate;
+
 extern NSString *kMPNotificationViewTapReceivedNotification;
 
-typedef void (^MPNotificationSimpleAction)(id);
-@protocol MPNotificationViewDelegate;
+typedef void (^MPNotificationSimpleAction)(MPNotificationView * view);
 
 @interface MPNotificationView : UIView
 
@@ -56,8 +58,11 @@ typedef void (^MPNotificationSimpleAction)(id);
                                    type:(NSString *)type
                           andTouchBlock:(MPNotificationSimpleAction)block;
 
+
 + (void)registerNibNameOrClass:(id)nibNameOrClass
         forNotificationsOfType:(NSString *)type;
++ (void) showNextNotification;
+
 
 @end
 
