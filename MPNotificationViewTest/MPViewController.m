@@ -94,6 +94,7 @@
                          andTouchBlock:^(MPNotificationView *notificationView) {
                              NSLog( @"Received touch for notification with text: %@", notificationView.textLabel.text );
                          }];
+}
 
 - (IBAction)showNextNotification:(id)sender
 {
