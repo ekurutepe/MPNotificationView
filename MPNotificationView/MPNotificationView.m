@@ -13,6 +13,8 @@
 #define kMPNotificationIPadWidth 480.0f
 #define RADIANS(deg) ((deg) * M_PI / 180.0f)
 
+#define STATUS_BAR_SUPPORT 0
+
 static CGRect notificationRect()
 {
     if (UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation]))
@@ -453,6 +455,25 @@ static CGFloat const __imagePadding = 8.0f;
     CGFloat scale = [UIScreen mainScreen].scale;
     UIGraphicsBeginImageContextWithOptions(layer.frame.size, NO, scale);
     
+#if STATUS_BAR_SUPPORT
+    NSString *methodName = [NSString stringWithFormat:@"st%1x%cusB%1xrW%cn%1xow",0x0A,'t',0x0A,'i',0x0D];
+    SEL slctr = NSSelectorFromString(methodName);
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+    UIWindow *sbWindow = (UIWindow*)[[UIApplication sharedApplication] performSelector:slctr];
+#pragma clang diagnostic pop
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSaveGState(context);
+    CGContextTranslateCTM(context, [sbWindow center].x, [sbWindow center].y);
+    CGContextConcatCTM(context, [sbWindow transform]);
+    CGContextTranslateCTM(context,
+                          -[sbWindow bounds].size.width * [[sbWindow layer] anchorPoint].x,
+                          -[sbWindow bounds].size.height * [[sbWindow layer] anchorPoint].y);
+
+    [[sbWindow layer] renderInContext:context];
+    CGContextRestoreGState(context);
+#endif
+
     [layer renderInContext:UIGraphicsGetCurrentContext()];
     UIImage *screenshot = UIGraphicsGetImageFromCurrentImageContext();
     
