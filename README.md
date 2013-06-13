@@ -19,42 +19,42 @@ An in-app notification view that mimics the iOS 6 notification views which appea
 
 Simply use the following call to show a message and related detail text:
 
-````
-    [MPNotificationView notifyWithText:@"Grumpy wizards" andDetail:@"make a toxic brew for the jovial queen"];`
-````
+```objective-c
+[MPNotificationView notifyWithText:@"Grumpy wizards" andDetail:@"make a toxic brew for the jovial queen"];`
+```
 
 Or use the following call to add a thumbnail image and customize duration:
 
-````
-    [MPNotificationView notifyWithText:@"Moped Dog:"
-                                detail:@"I have no idea what I'm doing..."
-                                 image:[UIImage imageNamed:@"mopedDog.jpeg"]
-                           andDuration:5.0];
-````
+```objective-c
+[MPNotificationView notifyWithText:@"Moped Dog:"
+                            detail:@"I have no idea what I'm doing..."
+                             image:[UIImage imageNamed:@"mopedDog.jpeg"]
+                       andDuration:5.0];
+```
 
 Or if you need to load the image async using `AFNetworking`:
 
-````
-    MPNotificationView* notification = 
-    [MPNotificationView notifyWithText:@"Moped Dog:"
-                                detail:@"I have no idea what I'm doing..."
-                                 image:nil
-                           andDuration:5.0];
+```objective-c
+MPNotificationView* notification = 
+[MPNotificationView notifyWithText:@"Moped Dog:"
+                            detail:@"I have no idea what I'm doing..."
+                             image:nil
+                       andDuration:5.0];
+                       
+//From UIImage+AFNetworking.h:                           
+[notification.imageView setImageWithURL:[NSURL URLWithString:@"https://dl.dropbox.com/u/361895/mopeddog.png"]];
                            
-    //From UIImage+AFNetworking.h:                           
-    [notification.imageView setImageWithURL:[NSURL URLWithString:@"https://dl.dropbox.com/u/361895/mopeddog.png"]];
-                           
-````
+```
 
 Touch handling can be implemented using blocks:
 
-````
-    [MPNotificationView notifyWithText:@"Grumpy wizards"
-                                detail:@"make a toxic brew for the jovial queen"
-                         andTouchBlock:^(MPNotificationView *notificationView) {
-                             NSLog( @"Received touch for notification with text: %@", notificationView.textLabel.text );
-    }];
-````
+```objective-c
+[MPNotificationView notifyWithText:@"Grumpy wizards"
+                            detail:@"make a toxic brew for the jovial queen"
+                     andTouchBlock:^(MPNotificationView *notificationView) {
+                         NSLog( @"Received touch for notification with text: %@", notificationView.textLabel.text );
+}];
+```
 
 Also by specifying a delegate which implements the `MPNotificationViewDelegate` and finally by handling the `kMPNotificationViewTapReceivedNotification` notification.
 
