@@ -9,21 +9,69 @@
 #import "MPNotificationView.h"
 #import "OBGradientView.h"
 
-#define kMPNotificationHeight    40.0f
+#define kMPNotificationHeight_IOS_6    40.0f
+#define kMPNotificationHeight_IOS_7    60.0f
 #define kMPNotificationIPadWidth 480.0f
 #define RADIANS(deg) ((deg) * M_PI / 180.0f)
 
+#ifndef kCFCoreFoundationVersionNumber_IOS_7_0
+#define kCFCoreFoundationVersionNumber_IOS_7_0 838.00
+#endif
+
+// Adapted from https://gist.github.com/steipete/6526860
+BOOL MPNotificationIsUIKitFlatMode(void) {
+    static BOOL isUIKitFlatMode = NO;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_IOS_7_0) {
+            
+            
+            // If your app is running in legacy mode, tintColor will be nil - else it must be set to some color.
+            if (UIApplication.sharedApplication.keyWindow) {
+                isUIKitFlatMode = [UIApplication.sharedApplication.keyWindow performSelector:@selector(tintColor)] != nil;
+            }else {
+                // Possible that we're called early on (e.g. when used in a Storyboard). Adapt and use a temporary window.
+                isUIKitFlatMode = [[UIWindow new] performSelector:@selector(tintColor)] != nil;
+            }
+        }
+    });
+    return isUIKitFlatMode;
+}
+
 static NSMutableDictionary * _registeredTypes;
+
+static CGFloat notificationHeight() {
+    CGFloat height;
+    if (MPNotificationIsUIKitFlatMode()) {
+        height = kMPNotificationHeight_IOS_7;
+    }
+    else {
+        height = kMPNotificationHeight_IOS_6;
+    }
+    
+    return height;
+    
+}
 
 static CGRect notificationRect()
 {
+
+
     if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))
     {
-        return CGRectMake(0.0f, 0.0f, [UIScreen mainScreen].bounds.size.height, kMPNotificationHeight);
+        return CGRectMake(0.0f, 0.0f,
+                          [UIScreen mainScreen].bounds.size.height,
+                          notificationHeight());
     }
     
-    return CGRectMake(0.0f, 0.0f, [UIScreen mainScreen].bounds.size.width, kMPNotificationHeight);
+    return CGRectMake(0.0f, 0.0f,
+                      [UIScreen mainScreen].bounds.size.width,
+                      notificationHeight());
+
 }
+
+
+
 
 NSString *kMPNotificationViewTapReceivedNotification = @"kMPNotificationViewTapReceivedNotification";
 
@@ -120,7 +168,7 @@ NSString *kMPNotificationViewTapReceivedNotification = @"kMPNotificationViewTapR
         
         if ([[UIDevice currentDevice] orientation] == UIDeviceOrientationPortraitUpsideDown)
         {
-            frame.origin.y = [UIScreen mainScreen].bounds.size.height - kMPNotificationHeight;
+            frame.origin.y = [UIScreen mainScreen].bounds.size.height - notificationHeight();
             self.transform = CGAffineTransformMakeRotation(RADIANS(180.0f));
         }
         else
@@ -131,7 +179,7 @@ NSString *kMPNotificationViewTapReceivedNotification = @"kMPNotificationViewTapR
     else
     {
         frame.size.height = frame.size.width;
-        frame.size.width  = kMPNotificationHeight;
+        frame.size.width  = notificationHeight();
         
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
         {
@@ -174,7 +222,7 @@ static CGFloat const __imagePadding = 8.0f;
 @interface MPNotificationView ()
 
 
-@property (nonatomic, strong) OBGradientView * contentView;
+@property (nonatomic, strong) UIView * contentView;
 @property (nonatomic, copy) MPNotificationSimpleAction tapBlock;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureRecognizer;
 
@@ -199,14 +247,26 @@ static CGFloat const __imagePadding = 8.0f;
         
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         
-        _contentView = [[OBGradientView alloc] initWithFrame:self.bounds];
-        _contentView.colors = @[(id)[[UIColor colorWithWhite:0.99f alpha:1.0f] CGColor],
-                                (id)[[UIColor colorWithWhite:0.9f  alpha:1.0f] CGColor]];
-        
-        _contentView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        _contentView.layer.cornerRadius = 8.0f;
-        _contentView.clipsToBounds = YES;
+        if (MPNotificationIsUIKitFlatMode()) {
+            UIToolbar * toolbar = [[UIToolbar alloc] initWithFrame:self.bounds];
+            
+            toolbar.barTintColor = [UIColor colorWithWhite:0.25 alpha:0.75];
+            _contentView = toolbar;
+        }
+        else {
+            OBGradientView * gradientView = [[OBGradientView alloc] initWithFrame:self.bounds];
+            
+            gradientView.colors = @[(id)[[UIColor colorWithWhite:0.99f alpha:1.0f] CGColor],
+                                    (id)[[UIColor colorWithWhite:0.9f  alpha:1.0f] CGColor]];
+            
+            gradientView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+            gradientView.layer.cornerRadius = 8.0f;
+            gradientView.clipsToBounds = YES;
+            
+            _contentView = gradientView;
+        }
         [self addSubview:_contentView];
+            
         
         _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(6, 6, 28, 28)];
         _imageView.contentMode = UIViewContentModeScaleAspectFill;
