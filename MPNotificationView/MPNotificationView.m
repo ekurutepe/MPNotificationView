@@ -592,6 +592,7 @@ static CGFloat const __imagePadding = 8.0f;
         viewToSlideIn.frame = CGRectOffset(notificationRect(), 0, -notificationHeight());
         
         [__notificationWindow addSubview:viewToSlideIn];
+        __notificationWindow.hidden = NO;
         
         
         UIView * viewToSlideOut = nil;
@@ -638,6 +639,7 @@ static CGFloat const __imagePadding = 8.0f;
                          completion:^(BOOL finished) {
                              [oldNotification removeFromSuperview];
                              __notificationWindow.currentNotification = nil;
+                             __notificationWindow.hidden = YES;
                          }];
     }
 }
