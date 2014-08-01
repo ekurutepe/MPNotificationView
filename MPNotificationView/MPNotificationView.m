@@ -388,7 +388,7 @@ static CGFloat const __imagePadding = 8.0f;
         _tapBlock(self);
     }
     
-    if ([_delegate respondsToSelector:@selector(tapReceivedForNotificationView:)])
+    if ([_delegate respondsToSelector:@selector(didTapOnNotificationView:)])
     {
         [_delegate didTapOnNotificationView:self];
     }
