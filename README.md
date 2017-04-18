@@ -3,19 +3,19 @@ MPNotificationView
 
 An in-app notification view that mimics the iOS 6 notification views which appear above the status bar. Compatible with iOS 4.3 and above.
 
-###Features:
+### Features:
 
 - Animation and layout similar to iOS 6 notifications
 - Provides two `UILabels` and an `UIImageView`
 - Simple API
 - Enqueues multiple notifications and shows them with a default duration of 2 seconds.
 
-###Screenshot:
+### Screenshot:
 ![Example notification](https://dl.dropbox.com/u/361895/mopeddog.png "Example Notification")
 
 
 
-###Usage:
+### Usage:
 
 Simply use the following call to show a message and related detail text:
 
@@ -58,20 +58,20 @@ Touch handling can be implemented using blocks:
 
 Also by specifying a delegate which implements the `MPNotificationViewDelegate` and finally by handling the `kMPNotificationViewTapReceivedNotification` notification.
 
-###Contact:
+### Contact:
 
 Developed by [Engin Kurutepe](https://www.twitter.com/engintepe) at [Moped](http://www.moped.com) in [Berlin](http://goo.gl/maps/Ivk0B)
 
 Follow us on twitter: [@moped](https://www.twitter.com/moped)
 
 
-###Thanks:
+### Thanks:
 
 Thanks to [kovpas](https://github.com/kovpas) for his amazing contributions, including but not limited to proper iPad support.
 
 Also stole some ideas from [BWStatusOverlay](https://github.com/brunow/BWStatusBarOverlay) by Bruno Wernimont. Thanks. 
 
-###License:
+### License:
 
 Copyright (c) 2013 Engin Kurutepe - Moped Inc.
 
